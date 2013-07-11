@@ -1,0 +1,11 @@
+HiForest merging scripts
+
+There are two sets of HiForest merging scripts in this directory:
+1) A system based on hadd that can be submitted to condor over many jobs
+make.sh
+submit.sh
+run.sh
+
+2) A system based on a custom root macro that is more robust to changes in trees but has no scheme (yet) for submitting to a batch system.
+mergeForest_pPb.C
+run_merge_script.sh
