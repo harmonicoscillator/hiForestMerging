@@ -1,5 +1,5 @@
 HiForest merging scripts
-Author: Alex Barbieri <luck@mit.edu>
+Author: Alex Barbieri
 
 There are two sets of HiForest merging scripts in this directory:
 1) A system based on hadd that can be submitted to condor over many jobs
