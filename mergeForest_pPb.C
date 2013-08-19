@@ -7,7 +7,7 @@
 void mergeForest_pPb(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_photonSkimForest_v85_unmerged/pA_*", TString outfile="output.root")
 {
   cout  << fname << endl;
-  const Int_t Ntrees = 73;
+  const Int_t Ntrees = 95;
   // const int Ntrees = 13;
   TString dir[Ntrees] = {
     "akPu2PFCones",   
@@ -64,6 +64,7 @@ void mergeForest_pPb(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_phot
     "fastjet",
     "fastjet",
     "fastjet",
+    "genpana",
     "hcalNoise",
     "akPu3PFJetAnalyzer",
     "akPu4PFJetAnalyzer",
@@ -78,12 +79,33 @@ void mergeForest_pPb(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_phot
     "ak4CaloJetAnalyzer",
     "ak5CaloJetAnalyzer",
     "multiPhotonAnalyzer",
+    "HiGenParticleAna",
+    "HiGenParticleAna",
     "ppTrack",
+    "pixelTrack",
     "pfcandAnalyzer",
+    "rechitanalyzer",
+    "rechitanalyzer",
+    "rechitanalyzer",
+    "rechitanalyzer",
+    "rechitanalyzer",
+    "rechitanalyzer",
+    "rechitanalyzer",
+    "rechitanalyzer",
+    "rechitanalyzer",
+    "pfTowers",
+    "pfTowers",
+    "pfTowers",
+    "pfTowers",
+    "pfTowers",
+    "pfTowers",
+    "pfTowers",
+    "pfTowers",
+    "pfTowers",
     "anaMET",
     "muonTree",
     "hiEvtAnalyzer"
-    //"HiForest", //only contains histos?
+    //"HiForest" //only contains histos?
   };
 
 
@@ -144,6 +166,7 @@ void mergeForest_pPb(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_phot
     "kt5PFJets2",
     "kt6PFJets2",
     //end fastjet
+    "photon",
     "hbhenoise",
     //jet trees x12
     "t",
@@ -160,12 +183,34 @@ void mergeForest_pPb(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_phot
     "t",
     //end jet trees
     "photon",
+    "nt",
+    "hi",
+    //nothing for hitrkEffAnalyzer_akpu3pf
+    "trackTree",
     "trackTree",
     "pfTree",
+    "hbhe",
+    "hf",
+    "ee",
+    "eb",
+    "tower",
+    "castor",
+    "zdcrechit",
+    "zdcdigi",
+    "ntEvent",
+    "hbhe",
+    "hf",
+    "ee",
+    "eb",
+    "tower",
+    "castor",
+    "zdcrechit",
+    "zdcdigi",
+    "ntEvent",
     "metTree",
     "HLTMuTree",
     "HiTree"
-    // nothing for HiForest
+    //"HiForestVersion"// nothing for HiForest
   };
 
 
