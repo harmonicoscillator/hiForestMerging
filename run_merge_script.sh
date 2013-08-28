@@ -18,7 +18,7 @@ do
  	echo "Output name : ${OUTPUT}"
 
  	INPUT="${FOLDER}/*.root"
- 	root -b -l -x -q mergeForest_pPb.C+\(\"$INPUT\",\"$OUTPUT\"\)
+ 	root -b -l -x -q mergeForest.C+\(\"$INPUT\",\"$OUTPUT\"\)
  	echo "JOB DONE."
  	echo ""
      done
@@ -28,5 +28,5 @@ for PTHAT in 30 50 80 120 170 220 280 370
 do
     INPUT="pA_Pyquen_allQCDPhoton${PTHAT}b*.root"
     OUTPUT="pA_Pyquen_allQCDPhoton${PTHAT}_hiForest2_53x_2013-18-14-1922.root"
-    root -b -l -x -q mergeForest_pPb.C+\(\"$INPUT\",\"$OUTPUT\"\)
+    root -b -l -x -q mergeForest.C+\(\"$INPUT\",\"$OUTPUT\"\)
 done

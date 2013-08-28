@@ -8,6 +8,6 @@ submit.sh
 run.sh
 
 2) A system based on a custom root macro that is more robust to changes in trees but has no scheme (yet) for submitting to a batch system.
-mergeForest_pPb.C
+mergeForest.C
 run_merge_script.sh
 
