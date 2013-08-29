@@ -7,8 +7,8 @@
 #include <TString.h>
 #include <iostream>
 
-void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/luck/test/*.root",
-		 TString outfile="output.root")
+void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/luck/pp_minbiasSkim_forest_53x_2013-08-15-0155_unmerged/*.root",
+		 TString outfile="pp_minbiasSkim_forest_53x_2013-08-15-0155.root")
 {
   // First, find on of the files within 'fname' and use it to make a
   // list of trees. Unfortunately we have to know in advance at least
@@ -52,7 +52,7 @@ void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/luck/test/*.root",
   const int Ntrees = trees.size();
   TChain* ch[Ntrees];
 
-  Long64_t nentries;
+  Long64_t nentries = 0;
   for(int i = 0; i < Ntrees; ++i){
     ch[i] = new TChain(trees[i]);
     ch[i]->Add(fname);
@@ -67,7 +67,7 @@ void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/luck/test/*.root",
     {
       std::cout << "ERROR: number of entries in this tree does not match." << std::endl;
       std::cout << "Exiting. Please check input." << std::endl;
-      exit(1);
+      return;
     }
   }
 
