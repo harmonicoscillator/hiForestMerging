@@ -62,6 +62,7 @@ void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/luck/pp_minbiasSkim
     // If the number of entries in this tree is different from other
     // trees there is a problem. Quit and inform the user without
     // producing output.
+    if(strcmp(trees[i],"HiForest/HiForestVersion") == 0) continue;
     if(i == 0) nentries = ch[i]->GetEntries();
     else if (nentries != ch[i]->GetEntries())
     {
