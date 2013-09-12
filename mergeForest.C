@@ -7,8 +7,8 @@
 #include <TString.h>
 #include <iostream>
 
-void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/luck/pp_minbiasSkim_forest_53x_2013-08-15-0155_unmerged/*.root",
-		 TString outfile="pp_minbiasSkim_forest_53x_2013-08-15-0155.root")
+void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_jet20Skim_forest_53x_2013-08-15-0155_unmerged/*.root",
+		 TString outfile="pA_jet20Skim_forest_53x_2013-08-15-0155.root")
 {
   // First, find on of the files within 'fname' and use it to make a
   // list of trees. Unfortunately we have to know in advance at least
@@ -90,6 +90,7 @@ void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/luck/pp_minbiasSkim
   	file->cd(dir[i]);
     }
     ch[i]->Merge(file,0,"keep");
+    delete ch[i];
   }
   //file->Write();
   file->Close();
