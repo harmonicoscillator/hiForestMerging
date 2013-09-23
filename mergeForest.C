@@ -8,9 +8,9 @@
 #include <iostream>
 #include <stdlib.h>
 
-void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_jet20Skim_forest_53x_2013-08-15-0155_unmerged/*.root",
-		 TString outfile="pA_jet20Skim_forest_53x_2013-08-15-0155.root",
-		 int failOnError = 1)
+int mergeForest(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_jet20Skim_forest_53x_2013-08-15-0155_unmerged/*.root",
+		TString outfile="pA_jet20Skim_forest_53x_2013-08-15-0155.root",
+		int failOnError = 1)
 {
   // First, find on of the files within 'fname' and use it to make a
   // list of trees. Unfortunately we have to know in advance at least
@@ -72,7 +72,7 @@ void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_jet20Ski
       {
 	std::cout << "ERROR: number of entries in this tree does not match." << std::endl;
 	std::cout << "Exiting. Please check input." << std::endl;
-	return;
+	return 1;
       }
     }
     else
@@ -105,6 +105,7 @@ void mergeForest(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_jet20Ski
   file->Close();
 
   std::cout << "Done. Output: " << outfile << std::endl;
+  return 0;
 }
 
 int main(int argc, char *argv[])
@@ -114,10 +115,12 @@ int main(int argc, char *argv[])
     std::cout << "Usage: mergeForest <input_collection> <output_file>" << std::endl;
     return 1;
   }
+
+  int rStatus = -1;
   
   if(argc == 3)
-    mergeForest(argv[1], argv[2]);
+    rStatus = mergeForest(argv[1], argv[2]);
   else if (argc == 4)
-    mergeForest(argv[1], argv[2], atoi(argv[3]));
-  return 0;
+    rStatus = mergeForest(argv[1], argv[2], atoi(argv[3]));
+  return rStatus;
 }
