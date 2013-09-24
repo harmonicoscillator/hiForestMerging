@@ -41,7 +41,7 @@ int mergeForest(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_jet20Skim
       TTree* tree = (TTree*)testFile->Get(treeName);
       if(strcmp(tree->ClassName(), "TTree") != 0 && strcmp(tree->ClassName(), "TNtuple") != 0) continue;
 
-      if(strcmp(treeName.Data(), trees.back().Data()) != 0) // skip duplicate tree entries
+      if((trees.size() == 0) || (strcmp(treeName.Data(), trees.back().Data()) != 0)) // skip duplicate tree entries
       {
 	trees.push_back(treeName);
 	dir.push_back(dFile->GetName());
