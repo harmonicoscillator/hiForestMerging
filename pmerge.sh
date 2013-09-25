@@ -1,14 +1,6 @@
-if [[ -z "$1" ]]
-then
-  echo "Usage: ./pmerge.sh <input-list> <out-dir> <files-per-job>"
-  exit 1
-fi
-if [[ -z "$2" ]]
-then
-  echo "Usage: ./pmerge.sh <input-list> <out-dir> <files-per-job>"
-  exit 1
-fi
-if [[ -z "$3" ]]
+#!/bin/bash
+
+if [[ $# -ne 3 ]]
 then
   echo "Usage: ./pmerge.sh <input-list> <out-dir> <files-per-job>"
   exit 1
@@ -16,17 +8,21 @@ fi
 
 now="submit_$(date +"%Y-%m-%d__%H_%M_%S")"
 mkdir $now
+echo "Working directory: $now"
 logdir="$HOME/CONDOR_LOGS/mergeLogs/$now"
 mkdir -p $logdir
+echo "Logs will be placed in: $logdir"
+
 len=$(wc -l $1 | awk '{print $1}')
 filesperjob=$3
 njobs=$((len/filesperjob+1))
-#echo $njobs
+echo "$len files, with $njobs jobs"
 
 cp $1 $now
 mkdir -p $2
 
-g++ mergeForest.C $(root-config --cflags --libs) -Werror -Wall -O2 -o mergeForest.exe
+echo "compiling merge script"
+g++ mergeForest.C $(root-config --cflags --libs) -Werror -Wall -O2 -o mergeForest.exe || exit 1
 
 cp mergeForest.exe $now
 
@@ -54,7 +50,7 @@ cat > $now/merge.sh <<EOF
 start=\$(((\$1+1)*\$4))
 mkdir mergedTmp
 cat \$2 | head -n \$start | tail -n \$4 | awk -v filename=\$1 -v outdir=\$3 -v nfiles=\$4 '{print "ln -s "\$1" mergedTmp/"}' | bash
-# echo | awk -v filename=\$1 -v outdir=\$3 -v nfiles=\$4 '{print "root -b -q \"mergeForest.C+(\\\"mergedTmp/*.root\\\",\\\""filename".root\\\")\""}' | bash
+
 echo | awk -v filename=\$1 -v outdir=\$3 -v nfiles=\$4 '{print "./mergeForest.exe \"mergedTmp/*.root\" \""filename".root\""}' | bash
 mv \$1.root \$3
 
