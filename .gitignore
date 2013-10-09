@@ -4,3 +4,5 @@
 *.out
 *.exe
 *.log
+*.txt
+submit_*
