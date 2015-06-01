@@ -2,46 +2,48 @@
 
 #List of samples
 # AllQCDPhotons:
-#   30 DONE 845 DONE
-#   50 DONE 847 DONE
-#   80 DONE 844 DONE
-#   120 DONE 758 DONE
-#   170 DONE 749 DONE
+#   30
+#   50
+#   80
+#   120
+#   170
 #
 # EmEnrichedDijet
-#   30 DONE 821 DONE
-#   50 DONE 812 DONE
-#   80 DONE 743 DONE
-#   120 DONE 842 DONE
-#   170 DONE 838 FORESTING
+#   30
+#   50
+#   80
+#   120
+#   170
 
+now1="submit_$(date +"%Y-%m-%d__%H_%M_%S")"
 
-
-for SAMPLETYPE in AllQCDPhotons EmEnrichedDijet
+for DIRECTION in pPb Pbp
 do
-    for PTHAT in 30 50 80 120 170
+    for SAMPLETYPE in AllQCDPhoton EmEnriched
     do
-	now="submit_$(date +"%Y-%m-%d__%H_%M_%S")_${SAMPLETYPE}${PTHAT}"
-	mkdir -p $now
-	echo "Working directory: $now"
-	logdir="$HOME/CONDOR_LOGS/mergeLogs/$now"
-	mkdir -p $logdir
-	echo "Logs will be placed in: $logdir"
+	for PTHAT in 30 50 80 120 170
+	do
+	    now="${now1}_${DIRECTION}_${SAMPLETYPE}${PTHAT}"
+	    mkdir -p $now
+	    echo "Working directory: $now"
+	    #logdir="$HOME/CONDOR_LOGS/mergeLogs/$now"
+	    #mkdir -p $logdir
+	    #echo "Logs will be placed in: $logdir"
 
-	DATASET=/mnt/hadoop/cms/store/user/luck/PbPb_pythiaHYDJET_forest_${SAMPLETYPE}${PTHAT}_unmerged/*.root
-	DESTINATION=/mnt/hadoop/cms/store/user/luck/PbPb_pythiaHYDJET_forest_${SAMPLETYPE}${PTHAT}
-	mkdir -p $DESTINATION
-	OUTFILE=PbPb_pythiaHYDJET_forest_${SAMPLETYPE}${PTHAT}.root
-	#echo hadd -f ${OUTFILE} "${DATASET}/*.root" 
-	cat > $now/manyMerge.condor <<EOF
+	    DATASET=/mnt/hadoop/cms/store/user/richard/2014-photon-forests/${DIRECTION}_MIX_${SAMPLETYPE}${PTHAT}_localJEC_v3/*.root
+	    DESTINATION=/mnt/hadoop/cms/store/user/luck/2014-photon-forests/${DIRECTION}_MIX_localJEC_v3/
+	    mkdir -p $DESTINATION
+	    OUTFILE=${DIRECTION}_MIX_${SAMPLETYPE}${PTHAT}_localJEC_v3.root
+	    #echo hadd -f ${OUTFILE} "${DATASET}/*.root" 
+	    cat > $now/manyMerge.condor <<EOF
 Universe     = vanilla
 Initialdir   = $PWD/$now
 Notification = Error
 Executable   = $PWD/$now/merge.sh
-Arguments    = $OUTFILE "$DATASET" $DESTINATION
+Arguments    = $OUTFILE $DATASET $DESTINATION
 GetEnv       = True
-Output       = $logdir/\$(Process).out
-Error        = $logdir/\$(Process).err
+#Output       = $logdir/\$(Process).out
+#Error        = $logdir/\$(Process).err
 #Log          = $logdir/\$(Process).log
 Rank         = Mips
 +AccountingGroup = "group_cmshi.$(whoami)"
@@ -53,13 +55,13 @@ Queue
 
 EOF
 
-	cat > $now/merge.sh <<EOF
+	    cat > $now/merge.sh <<EOF
 #!/bin/sh
 hadd -f \$1 \$2
 mv \$1 \$3
 
 EOF
-	condor_submit $now/manyMerge.condor
+	    condor_submit $now/manyMerge.condor
+	done
     done
 done
-

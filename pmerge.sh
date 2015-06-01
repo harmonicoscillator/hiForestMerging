@@ -9,9 +9,9 @@ fi
 now="submit_$(date +"%Y-%m-%d__%H_%M_%S")"
 mkdir $now
 echo "Working directory: $now"
-logdir="$HOME/CONDOR_LOGS/mergeLogs/$now"
-mkdir -p $logdir
-echo "Logs will be placed in: $logdir"
+#logdir="$HOME/CONDOR_LOGS/mergeLogs/$now"
+#mkdir -p $logdir
+#echo "Logs will be placed in: $logdir"
 
 len=$(wc -l $1 | awk '{print $1}')
 filesperjob=$3
@@ -33,8 +33,8 @@ Notification = Error
 Executable   = $PWD/$now/merge.sh
 Arguments    = \$(Process) $1 $2 $3
 GetEnv       = True
-Output       = $logdir/\$(Process).out
-Error        = $logdir/\$(Process).err
+#Output       = $logdir/\$(Process).out
+#Error        = $logdir/\$(Process).err
 #Log          = $logdir/\$(Process).log
 Rank         = Mips
 +AccountingGroup = "group_cmshi.$(whoami)"
