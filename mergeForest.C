@@ -17,7 +17,7 @@ int mergeForest(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_jet20Skim
   // one of the tree names. hiEvtAnalyzer/HiTree is a safe choice for
   // HiForests. We also assume that every TTree is inside a
   // TDirectoryFile which is in the top level of the root file.
-  TChain *dummyChain = new TChain("hiEvtAnalyzer/HiTree");
+  TChain *dummyChain = new TChain("HiForest/HiForestVersion");
   dummyChain->Add(fname);
   TFile *testFile = dummyChain->GetFile();
   TList *topKeyList = testFile->GetListOfKeys();
@@ -29,7 +29,7 @@ int mergeForest(TString fname = "/mnt/hadoop/cms/store/user/richard/pA_jet20Skim
   {
     TDirectoryFile *dFile = (TDirectoryFile*)testFile->Get(topKeyList->At(i)->GetName());
     if(strcmp(dFile->ClassName(), "TDirectoryFile") != 0) continue;
-    
+
     TList *bottomKeyList = dFile->GetListOfKeys();
 
     for(int j = 0; j < bottomKeyList->GetEntries(); ++j)
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
   }
 
   int rStatus = -1;
-  
+
   if(argc == 3)
     rStatus = mergeForest(argv[1], argv[2]);
   else if (argc == 4)
